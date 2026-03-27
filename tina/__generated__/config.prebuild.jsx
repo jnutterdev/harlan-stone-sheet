@@ -16,7 +16,8 @@ var config_default = defineConfig({
   token: process.env.TINA_TOKEN ?? null,
   build: {
     outputFolder: "admin",
-    publicFolder: "public"
+    publicFolder: "public",
+    ...process.env.TINA_BASE_PATH ? { basePath: process.env.TINA_BASE_PATH } : {}
   },
   schema: {
     collections: [
