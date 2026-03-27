@@ -34,6 +34,6 @@ jobs:
       - name: Deploy
         run: |
           rsync -avzr --delete \
-            -e "ssh -i ~/.ssh/id_deploy" \
+            -e "ssh -i ~/.ssh/id_deploy -l 'atadmin@ashtephra.com'" \
             dist/ \
-            atadmin@ashtephra.com:/home/atadmin/all_domains/wyrmwoodpalisades.com/characters/
+            ashtephra.com:/home/atadmin/all_domains/wyrmwoodpalisades.com/characters/
