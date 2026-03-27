@@ -1,43 +1,49 @@
-# Astro Starter Kit: Minimal
+# Harlan Stone — Character Sheet
+
+A print-ready D&D character sheet for Harlan Stone (Human Variant Druid 3, Circle of the Moon), built with Astro and Tina CMS. Mobile responsive, with a fixed 9×6in card layout on desktop and in print.
+
+## Getting started
+
+Install dependencies:
 
 ```sh
-npm create astro@latest -- --template minimal
+npm install
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+If port 9000 is already in use from a previous session that wasn't cleanly shut down:
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```sh
+lsof -ti :9000 | xargs kill -9
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Start the dev server:
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+```sh
+npm run dev
+```
 
-Any static assets, like images, can be placed in the `public/` directory.
+| URL | What it is |
+| :-- | :--------- |
+| `http://localhost:4321/` | Character sheet |
+| `http://localhost:4321/admin/index.html` | Tina CMS editor |
 
-## 🧞 Commands
+## Editing content
 
-All commands are run from the root of the project, from a terminal:
+All character data lives in `content/characters/harlan.json`. You can edit it directly, or use the Tina CMS editor at `/admin/index.html` for a visual interface. Changes to the JSON hot-reload the sheet instantly in dev.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## Commands
 
-## 👀 Want to learn more?
+| Command | Action |
+| :-- | :-- |
+| `npm run dev` | Start Tina + Astro dev server |
+| `npm run build` | Build production site to `./dist/` |
+| `npm run preview` | Preview the production build locally |
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Adding a second character
+
+1. Add a new JSON file to `content/characters/` following the same structure as `harlan.json`
+2. Create a new page at `src/pages/[name].astro` that imports the JSON
+
+## Deploying
+
+`npm run build` produces a static site in `./dist/` that can be hosted on Netlify, GitHub Pages, or any static host. To enable editing on the deployed site (rather than just locally), sign up at [tina.io](https://tina.io) and add `PUBLIC_TINA_CLIENT_ID` and `TINA_TOKEN` environment variables.
