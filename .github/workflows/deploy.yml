@@ -23,7 +23,7 @@ jobs:
         env:
           PUBLIC_TINA_CLIENT_ID: ${{ secrets.PUBLIC_TINA_CLIENT_ID }}
           TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
-          TINA_BASE_PATH: /characters/
+          TINA_BASE_PATH: characters
 
       - name: Set up SSH
         run: |
