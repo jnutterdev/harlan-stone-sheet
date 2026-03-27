@@ -1,0 +1,117 @@
+{
+  "name": "Harlan Stone",
+  "abilityScores": {
+    "str": { "score": 12, "mod": "+1" },
+    "dex": { "score": 13, "mod": "+1" },
+    "con": { "score": 15, "mod": "+2" },
+    "int": { "score": 10, "mod": "+0" },
+    "wis": { "score": 16, "mod": "+3" },
+    "cha": { "score": 8, "mod": "−1" }
+  },
+  "savingThrows": {
+    "str": "+1",
+    "dex": "+1",
+    "con": "+2",
+    "int": "+2",
+    "wis": "+5",
+    "cha": "−1"
+  },
+  "combatStats": {
+    "ac": "13",
+    "hp": "24",
+    "initiative": "+1",
+    "speed": "30"
+  },
+  "skills": {
+    "animalHandling": "+5",
+    "insight": "+5",
+    "investigation": "+2",
+    "nature": "+2",
+    "perception": "+5",
+    "survival": "+5",
+    "medicine": "+3",
+    "passivePerception": "15",
+    "passiveInvestigation": "12"
+  },
+  "identityTags": [
+    "Human (Variant)",
+    "Druid 3",
+    "Circle of the Moon",
+    "Outlander",
+    "Neutral Good",
+    "Ursine Elders"
+  ],
+  "attacks": [
+    { "name": "Shillelagh (Staff)", "stat": "+5 to hit, 1d8+3 bludgeoning." },
+    { "name": "Quarterstaff", "stat": "+3 to hit, 1d6+1 bludgeoning." },
+    { "name": "Dagger", "stat": "+3 to hit, 1d4+1 piercing." }
+  ],
+  "spellcasting": {
+    "saveDC": "13",
+    "attackBonus": "+5",
+    "cantrips": "Shillelagh, Druidcraft, Guidance.",
+    "spells1": "Cure Wounds, Entangle, Faerie Fire, Healing Word, Speak with Animals, Thunderwave.",
+    "spells2": "Barkskin, Enhance Ability, Misty Step, Pass Without Trace.",
+    "slots": "4 first-level, 2 second-level."
+  },
+  "wildShape": {
+    "description": "bonus action, 2/short rest, CR 1 max, no flying or swimming forms. While shifted, Harlan can spend spell slots to heal 1d8 per slot level as a bonus action.",
+    "circleForms": "Moon druid forms up to CR 1."
+  },
+  "brownBearForm": {
+    "ac": "11",
+    "hp": "34",
+    "speed": "40 ft, climb 30 ft.",
+    "str": "19",
+    "dex": "10",
+    "con": "16",
+    "multiattack": "one Bite and one Claws on the same turn.",
+    "bite": "+5 to hit, 1d8+4 piercing.",
+    "claws": "+5 to hit, 2d6+4 slashing.",
+    "passivePerception": "13"
+  },
+  "features": [
+    { "name": "War Caster", "description": "advantage on Constitution saves to maintain concentration, can perform somatic components with hands full, can cast spells as opportunity attacks." },
+    { "name": "Barkskin", "description": "concentration, AC cannot be below 16 while active." },
+    { "name": "Druidic", "description": "secret language of druids, including hidden messages in nature." }
+  ],
+  "quickRead": "Harlan is a grief-marked Moon Druid who blends detective instincts with guardian fury. He watches first, speaks second, and when the line breaks, the bear answers.",
+  "background": [
+    "Born into the Ursine Elders in Mordent's outer wilds, Harlan was swept away as a child when a coordinated flood, orchestrated by House Naeveth through the Order of the Waning Circle, destroyed his homeland. He grew up in the flooded city with no knowledge of his lineage and became a homicide detective.",
+    "His partner, Maren Sable, was the closest thing to family he had known. When she was murdered by a ritualist of the Order, killed for what Harlan is and not by chance, his grief triggered his first involuntary wild shape. That moment began the search that led him to Athas, captivity, the truth of his bloodline, and finally escape."
+  ],
+  "personality": "Harlan scans every room before speaking: exits, faces, anything off. He carries dry humor, goes quiet when pushed, and runs on chocolate and anxiety. Under the restraint is a man who bonds deeply, protects fiercely, and fears what attachment costs.",
+  "ideal": "The people worth protecting rarely know they need it. Someone has to pay attention.",
+  "bond": "Maren Sable believed in him before he believed in himself. He carries her name like a debt he can never repay.",
+  "flaw": "He bonds deeply and completely, and was destroyed by it once. He holds people at arm's length and calls it professionalism.",
+  "soulRead": "Harlan lives between investigator and guardian, reason and instinct. The bear is not a mask. It is an inheritance, a weapon, and a truth he is still learning how to carry without losing himself.",
+  "planescapeRead": "Sigil is likely to strike Harlan as a city of clues, masks, and too many doors. He will distrust it immediately, then begin reading its layers the way he reads a case scene: motive, pattern, pressure, hidden hand.",
+  "allies": [
+    { "name": "The Ursine Elders", "description": "legendary druidic clan of bear-kin and Harlan's blood heritage. He is reclaiming membership as a Bear Ward." },
+    { "name": "House Naeveth", "description": "defiler noble house from Athas. Orchestrated the flood that destroyed Harlan's homeland and now works across multiple planes." },
+    { "name": "Order of the Waning Circle", "description": "death cult from Mordent. Killed Maren Sable and targets druidic bloodlines." }
+  ],
+  "treasure": "A worn detective's badge from the Mordent City Watch. A small carved bear figurine left by the Ursine Elders. A folded note in Maren Sable's handwriting, never opened a second time.",
+  "coin": { "gp": "15" },
+  "oneLiner": "Harlan Stone is a grief-marked detective with a buried guardian bloodline, hunting the truth of what was taken from him while trying to survive belonging to anyone again.",
+  "gear": [
+    "Quarterstaff with bear claw charm",
+    "Leather armor",
+    "Explorer's pack",
+    "Druidic focus: wooden bear paw talisman",
+    "Herbalism kit",
+    "Dagger",
+    "Bedroll",
+    "Rations (5 days)",
+    "Waterskin",
+    "50 ft. hempen rope",
+    "Torches ×5",
+    "Chocolate and anxiety"
+  ],
+  "proficiencies": {
+    "armor": "light, medium, shields (non-metal).",
+    "weapons": "clubs, daggers, darts, javelins, maces, quarterstaffs, scimitars, slings, spears.",
+    "tools": "herbalism kit.",
+    "languages": "Common, Druidic, Sylvan."
+  }
+}

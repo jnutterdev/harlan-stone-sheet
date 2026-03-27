@@ -1,0 +1,516 @@
+---
+import char from '../../content/characters/harlan.json';
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{char.name} — Character Sheet</title>
+  <style>
+    :root {
+      --border: #1f1f1f;
+      --muted: #5a5a5a;
+      --bg: #f6f1e7;
+      --panel: #fffdf8;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 12px;
+      background: #d7d1c4;
+      color: #111;
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    .page {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: center;
+    }
+
+    /* ── Card ─────────────────────────────────────────────────────────── */
+    .card {
+      width: 100%;
+      height: auto;
+      background: var(--bg);
+      border: 2px solid var(--border);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      padding: 12px;
+      position: relative;
+    }
+
+    .titlebar {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 6px;
+      margin-bottom: 8px;
+      gap: 10px;
+    }
+
+    .title {
+      font-size: 18px;
+      line-height: 1;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted);
+    }
+
+    /* ── Layout ───────────────────────────────────────────────────────── */
+    .split-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .column-stack {
+      display: grid;
+      gap: 8px;
+      align-content: start;
+    }
+
+    /* ── Ability grid ─────────────────────────────────────────────────── */
+    .ability-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+
+    .stat-box {
+      border: 1.75px solid var(--border);
+      background: var(--panel);
+      min-height: 64px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4px 2px;
+    }
+
+    .stat-score {
+      font-size: 22px;
+      line-height: 1;
+      font-weight: 700;
+    }
+
+    .stat-name {
+      font-size: 10px;
+      letter-spacing: 1px;
+      margin-top: 2px;
+    }
+
+    .stat-mod {
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    /* ── Section boxes ────────────────────────────────────────────────── */
+    .section-box {
+      border: 1.5px solid var(--border);
+      background: var(--panel);
+      padding: 8px 10px;
+    }
+
+    .section-title {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-bottom: 1px solid #888;
+      padding-bottom: 2px;
+      margin-bottom: 6px;
+    }
+
+    .compact-list {
+      font-size: 13px;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .compact-list div { margin-bottom: 2px; }
+
+    /* ── Mini summary (AC / HP / Init / Speed) ────────────────────────── */
+    .mini-summary {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+
+    .mini-box {
+      border: 1.5px solid var(--border);
+      background: var(--panel);
+      padding: 5px 4px;
+      text-align: center;
+    }
+
+    .mini-label {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--muted);
+    }
+
+    .mini-value {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-top: 2px;
+    }
+
+    /* ── Text ─────────────────────────────────────────────────────────── */
+    .paragraph {
+      font-size: 13px;
+      line-height: 1.4;
+      margin: 0 0 4px;
+    }
+
+    .paragraph:last-child { margin-bottom: 0; }
+
+    .paragraph strong {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+    }
+
+    /* ── Tags ─────────────────────────────────────────────────────────── */
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .tag {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 4px 8px;
+      font-size: 11px;
+      line-height: 1.2;
+    }
+
+    /* ── Gear list ────────────────────────────────────────────────────── */
+    .gear-list {
+      columns: 2;
+      column-gap: 12px;
+      font-size: 13px;
+      line-height: 1.4;
+      margin: 0;
+      padding-left: 16px;
+    }
+
+    .gear-list li { margin-bottom: 3px; }
+
+    /* ── CMS link ─────────────────────────────────────────────────────── */
+    .cms-link {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      padding-bottom: 4px;
+    }
+
+    .cms-link a {
+      font-family: Georgia, serif;
+      font-size: 11px;
+      padding: 4px 12px;
+      border: 1.5px solid var(--border);
+      background: var(--panel);
+      color: #111;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+    }
+
+    .cms-link a:hover { background: #e8e2d8; }
+
+    /* ── Desktop: restore print-like card dimensions ──────────────────── */
+    @media (min-width: 960px) {
+      body { padding: 32px; }
+
+      .page { gap: 28px; }
+
+      .card {
+        width: 9in;
+        height: 6in;
+        overflow: hidden;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+      }
+
+      .title { font-size: 20px; }
+
+      .subtitle { white-space: nowrap; }
+
+      .split-layout {
+        grid-template-columns: 1fr 1fr;
+        height: calc(100% - 38px);
+      }
+
+      .column-stack { min-height: 0; }
+
+      .section-box { padding: 6px 7px; }
+
+      .compact-list { font-size: 11px; line-height: 1.25; }
+
+      .mini-value { font-size: 14px; }
+
+      .paragraph { font-size: 11px; line-height: 1.22; margin: 0; }
+
+      .paragraph strong { font-size: 10px; }
+
+      .tag { font-size: 10px; padding: 3px 6px; }
+
+      .gear-list { font-size: 11px; line-height: 1.2; }
+
+      .cms-link { width: 9in; padding-bottom: 8px; }
+    }
+
+    /* ── Print ────────────────────────────────────────────────────────── */
+    @media print {
+      @page { size: 9in 6in; margin: 0; }
+      body { background: white; padding: 0; }
+      .page { gap: 0; }
+      .card {
+        width: 9in;
+        height: 6in;
+        overflow: hidden;
+        box-shadow: none;
+        page-break-after: always;
+        margin: 0;
+      }
+      .split-layout { grid-template-columns: 1fr 1fr; height: calc(100% - 38px); }
+      .cms-link { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="cms-link">
+      <a href="/admin/index.html">Edit in CMS →</a>
+    </div>
+
+    <!-- Card 1: Ability Scores & Saves -->
+    <section class="card">
+      <div class="titlebar">
+        <div class="title">{char.name}</div>
+        <div class="subtitle">Card 1 · Ability Scores &amp; Saves</div>
+      </div>
+
+      <div class="split-layout">
+        <div class="column-stack">
+          <div class="ability-grid">
+            {Object.entries(char.abilityScores).map(([key, val]) => (
+              <div class="stat-box">
+                <div class="stat-score">{val.score}</div>
+                <div class="stat-name">{key.toUpperCase()}</div>
+                <div class="stat-mod">{val.mod}</div>
+              </div>
+            ))}
+          </div>
+
+          <div class="section-box">
+            <div class="section-title">Saving Throws</div>
+            <div class="compact-list">
+              {Object.entries(char.savingThrows).map(([key, val]) => (
+                <div><strong>{key.toUpperCase()}</strong> {val}</div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div class="column-stack">
+          <div class="mini-summary">
+            <div class="mini-box"><div class="mini-label">AC</div><div class="mini-value">{char.combatStats.ac}</div></div>
+            <div class="mini-box"><div class="mini-label">HP</div><div class="mini-value">{char.combatStats.hp}</div></div>
+            <div class="mini-box"><div class="mini-label">Init</div><div class="mini-value">{char.combatStats.initiative}</div></div>
+            <div class="mini-box"><div class="mini-label">Speed</div><div class="mini-value">{char.combatStats.speed}</div></div>
+          </div>
+
+          <div class="section-box">
+            <div class="section-title">Skills</div>
+            <div class="compact-list">
+              <div><strong>Animal Handling</strong> {char.skills.animalHandling}</div>
+              <div><strong>Insight</strong> {char.skills.insight}</div>
+              <div><strong>Investigation</strong> {char.skills.investigation}</div>
+              <div><strong>Nature</strong> {char.skills.nature}</div>
+              <div><strong>Perception</strong> {char.skills.perception}</div>
+              <div><strong>Survival</strong> {char.skills.survival}</div>
+              <div><strong>Medicine</strong> {char.skills.medicine}</div>
+              <div><strong>Passive Perception</strong> {char.skills.passivePerception} · <strong>Investigation</strong> {char.skills.passiveInvestigation}</div>
+            </div>
+          </div>
+
+          <div class="section-box">
+            <div class="section-title">Identity Tags</div>
+            <div class="tag-row">
+              {char.identityTags.map(tag => (
+                <div class="tag">{tag}</div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Card 2: Combat, Magic & Forms -->
+    <section class="card">
+      <div class="titlebar">
+        <div class="title">{char.name}</div>
+        <div class="subtitle">Card 2 · Combat, Magic &amp; Forms</div>
+      </div>
+
+      <div class="split-layout">
+        <div class="column-stack">
+          <div class="section-box">
+            <div class="section-title">Attacks</div>
+            {char.attacks.map(atk => (
+              <p class="paragraph"><strong>{atk.name}.</strong> {atk.stat}</p>
+            ))}
+          </div>
+
+          <div class="section-box">
+            <div class="section-title">Spellcasting</div>
+            <p class="paragraph"><strong>Wisdom Casting.</strong> Spell save DC {char.spellcasting.saveDC}, spell attack {char.spellcasting.attackBonus}.</p>
+            <p class="paragraph"><strong>Cantrips:</strong> {char.spellcasting.cantrips}</p>
+            <p class="paragraph"><strong>1st Level:</strong> {char.spellcasting.spells1}</p>
+            <p class="paragraph"><strong>2nd Level:</strong> {char.spellcasting.spells2}</p>
+            <p class="paragraph"><strong>Slots:</strong> {char.spellcasting.slots}</p>
+          </div>
+
+          <div class="section-box">
+            <div class="section-title">Wild Shape</div>
+            <p class="paragraph"><strong>Combat Wild Shape:</strong> {char.wildShape.description}</p>
+            <p class="paragraph"><strong>Circle Forms:</strong> {char.wildShape.circleForms}</p>
+          </div>
+        </div>
+
+        <div class="column-stack">
+          <div class="section-box">
+            <div class="section-title">Brown Bear Form</div>
+            <p class="paragraph"><strong>AC</strong> {char.brownBearForm.ac}, <strong>HP</strong> {char.brownBearForm.hp}, <strong>Speed</strong> {char.brownBearForm.speed}</p>
+            <p class="paragraph"><strong>STR</strong> {char.brownBearForm.str}, <strong>DEX</strong> {char.brownBearForm.dex}, <strong>CON</strong> {char.brownBearForm.con}.</p>
+            <p class="paragraph"><strong>Multiattack:</strong> {char.brownBearForm.multiattack}</p>
+            <p class="paragraph"><strong>Bite:</strong> {char.brownBearForm.bite} <strong>Claws:</strong> {char.brownBearForm.claws}</p>
+            <p class="paragraph"><strong>Passive Perception:</strong> {char.brownBearForm.passivePerception}.</p>
+          </div>
+
+          <div class="section-box">
+            <div class="section-title">Features</div>
+            {char.features.map(f => (
+              <p class="paragraph"><strong>{f.name}:</strong> {f.description}</p>
+            ))}
+          </div>
+
+          <div class="section-box">
+            <div class="section-title">Quick Read</div>
+            <p class="paragraph">{char.quickRead}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Card 3: Background & Personality -->
+    <section class="card">
+      <div class="titlebar">
+        <div class="title">{char.name}</div>
+        <div class="subtitle">Card 3 · Background &amp; Personality</div>
+      </div>
+
+      <div class="split-layout">
+        <div class="column-stack">
+          <div class="section-box">
+            <div class="section-title">Background</div>
+            {char.background.map(para => (
+              <p class="paragraph">{para}</p>
+            ))}
+          </div>
+
+          <div class="section-box">
+            <div class="section-title">Personality</div>
+            <p class="paragraph">{char.personality}</p>
+          </div>
+        </div>
+
+        <div class="column-stack">
+          <div class="section-box">
+            <div class="section-title">Ideals, Bonds &amp; Flaws</div>
+            <p class="paragraph"><strong>Ideal:</strong> {char.ideal}</p>
+            <p class="paragraph"><strong>Bond:</strong> {char.bond}</p>
+            <p class="paragraph"><strong>Flaw:</strong> {char.flaw}</p>
+          </div>
+
+          <div class="section-box">
+            <div class="section-title">Soul Read</div>
+            <p class="paragraph">{char.soulRead}</p>
+          </div>
+
+          <div class="section-box">
+            <div class="section-title">Planescape Read</div>
+            <p class="paragraph">{char.planescapeRead}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Card 4: Allies, Enemies & Gear -->
+    <section class="card">
+      <div class="titlebar">
+        <div class="title">{char.name}</div>
+        <div class="subtitle">Card 4 · Allies, Enemies &amp; Gear</div>
+      </div>
+
+      <div class="split-layout">
+        <div class="column-stack">
+          <div class="section-box">
+            <div class="section-title">Allies &amp; Enemies</div>
+            {char.allies.map(a => (
+              <p class="paragraph"><strong>{a.name}:</strong> {a.description}</p>
+            ))}
+          </div>
+
+          <div class="section-box">
+            <div class="section-title">Treasure &amp; Keepsakes</div>
+            <p class="paragraph">{char.treasure}</p>
+          </div>
+
+          <div class="section-box">
+            <div class="section-title">Coin</div>
+            <p class="paragraph"><strong>GP:</strong> {char.coin.gp}</p>
+          </div>
+
+          <div class="section-box">
+            <div class="section-title">One-Line Read</div>
+            <p class="paragraph">{char.oneLiner}</p>
+          </div>
+        </div>
+
+        <div class="column-stack">
+          <div class="section-box">
+            <div class="section-title">Gear</div>
+            <ul class="gear-list">
+              {char.gear.map(item => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="section-box">
+            <div class="section-title">Proficiencies &amp; Languages</div>
+            <p class="paragraph"><strong>Armor:</strong> {char.proficiencies.armor} <strong>Weapons:</strong> {char.proficiencies.weapons}</p>
+            <p class="paragraph"><strong>Tools:</strong> {char.proficiencies.tools}</p>
+            <p class="paragraph"><strong>Languages:</strong> {char.proficiencies.languages}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

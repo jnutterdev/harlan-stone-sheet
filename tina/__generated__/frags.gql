@@ -1,0 +1,130 @@
+fragment CharacterParts on Character {
+  __typename
+  name
+  abilityScores {
+    __typename
+    str {
+      __typename
+      score
+      mod
+    }
+    dex {
+      __typename
+      score
+      mod
+    }
+    con {
+      __typename
+      score
+      mod
+    }
+    int {
+      __typename
+      score
+      mod
+    }
+    wis {
+      __typename
+      score
+      mod
+    }
+    cha {
+      __typename
+      score
+      mod
+    }
+  }
+  savingThrows {
+    __typename
+    str
+    dex
+    con
+    int
+    wis
+    cha
+  }
+  combatStats {
+    __typename
+    ac
+    hp
+    initiative
+    speed
+  }
+  skills {
+    __typename
+    animalHandling
+    insight
+    investigation
+    nature
+    perception
+    survival
+    medicine
+    passivePerception
+    passiveInvestigation
+  }
+  identityTags
+  attacks {
+    __typename
+    name
+    stat
+  }
+  spellcasting {
+    __typename
+    saveDC
+    attackBonus
+    cantrips
+    spells1
+    spells2
+    slots
+  }
+  wildShape {
+    __typename
+    description
+    circleForms
+  }
+  brownBearForm {
+    __typename
+    ac
+    hp
+    speed
+    str
+    dex
+    con
+    multiattack
+    bite
+    claws
+    passivePerception
+  }
+  features {
+    __typename
+    name
+    description
+  }
+  quickRead
+  background
+  personality
+  ideal
+  bond
+  flaw
+  soulRead
+  planescapeRead
+  allies {
+    __typename
+    name
+    description
+  }
+  treasure
+  coin {
+    __typename
+    gp
+  }
+  oneLiner
+  gear
+  proficiencies {
+    __typename
+    armor
+    weapons
+    tools
+    languages
+  }
+}
